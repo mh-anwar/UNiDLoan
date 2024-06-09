@@ -9,6 +9,7 @@ import Image from "next/image";
 import Backdrop from "../../common/backdrop";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from 'next/link';
 
 const loginAnim = {
     hidden: {
@@ -44,24 +45,29 @@ function Student(dat) {
   const data = dat.data;
 
   return (
-    <button className="p-3 bg-transparent">
-      <div
-        href="https://google.com"
+    <div className="p-3 text-center bg-transparent">
+      <Link
+        href={"/profile/" + data.testnetId}
         className="duration-300 transition-all hover:border-[1.5px] bg-gray-50/[0.01] hover:bg-gray-50/[0.05] hover:shadow-sm border-gray-300/20 rounded-xl p-6 flex flex-col gap-3 w-full"
       >
         <div className="flex flex-col items-center gap-2">
           <Image alt="PFP" src={pfp} className="w-2/3 rounded-full" />
-          <h3 className="text-sm font-bold md:text-lg">{data.name}</h3>
+          <h3 className="text-sm font-bold md:text-lg">{
+            data.firstName + " " + data.lastName
+          }</h3>
         </div>
+      </Link>
         <div className="pl-3">
-          <p className="text-gray-100/60 font-[400]">{data.desc}</p>
+          {/* <div className='font-[400] text-md' >
+            {data.bio}
+          </div> */}
+          <button>Create Contract</button>
         </div>
-      </div>
-    </button>
+    </div>
   );
 }
 
-function Tabs() {
+function Tabs({data}) {
   return (
     <TabGroup className="p-3 flex-grow min-w-[20rem] max-w-[65rem] w-11/12">
       <TabList className="space-x-3">
@@ -74,14 +80,12 @@ function Tabs() {
       </TabList>
       <TabPanels className="text-gray-300">
         <TabPanel className="grid w-full h-full grid-cols-2 p-3 border-2 rounded-b-2xl border-zinc-800 md:grid-cols-4 xl:grid-cols-4">
-          <Student data={summary} />
-          <Student data={summary} />
-          <Student data={summary} />
-          <Student data={summary} />
-          <Student data={summary} />
-          <Student data={summary} />
-          <Student data={summary} />
-          <Student data={summary} />
+          {
+            data.map((student) => (
+              <Student key={student._id} data={student} />
+            ))
+          }
+        
         </TabPanel>
       </TabPanels>
     </TabGroup>
@@ -91,17 +95,16 @@ function Tabs() {
 function InvestorDash({params}) {
 
   const [data, setData] = useState([]);
-  
+  const [investorData, setInvestorData] = useState([]);
 	useEffect(() => {
 		console.log(params.slug);
-		fetch(`/api/student/${params.slug}`)
+		fetch(`/api/student/`)
 			.then((response) => {
-				console.log(response);
 				return response.json();
 			})
 			.then((data) => {
 				setData(data);
-				console.log(data);
+				console.log('ASDAS', data);
 			});
 		// Also fetch all investors who have invested into this person
 		fetch(`/api/contracts?studentId=${params.slug}`)
@@ -126,7 +129,7 @@ function InvestorDash({params}) {
           </h1>
         </div>
       </div>
-      <Tabs />
+      <Tabs data={data} />
     </div>
   );
 }
