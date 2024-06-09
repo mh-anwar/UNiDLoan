@@ -32,6 +32,10 @@ const StudentSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	video: {
+		type: String,
+		required: true,
+	},
 });
 
 const Student = mongoose.models.Student || model('Student', StudentSchema);

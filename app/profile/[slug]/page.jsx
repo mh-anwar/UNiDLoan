@@ -10,6 +10,7 @@ import {
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import Link from 'next/link';
 import Image from 'next/image';
+import pfp from '/public/pfp.jpg';
 import {
 	AreaChart,
 	XAxis,
@@ -52,13 +53,11 @@ function Investor(dat) {
 				className='duration-300 transition-all hover:border-[1.5px] bg-gray-50/[0.01] hover:bg-gray-50/[0.05] hover:shadow-sm border-gray-300/20 rounded-xl p-6 flex flex-col gap-3 w-full'
 			>
 				<div className='flex flex-row items-center gap-2'>
-					{/* 		<Image
+					<Image
 						alt='Profile picture'
-						src={
-							'https://d27jswm5an3efw.cloudfront.net/app/uploads/2019/07/how-to-make-a-url-for-a-picture-on-your-computer-4.jpg'
-						}
+						src={pfp}
 						className='rounded-full w-14'
-					/> */}
+					/>
 					<h3 className='text-sm font-bold md:text-lg'>
 						{data.name}
 					</h3>
@@ -69,49 +68,22 @@ function Investor(dat) {
 	);
 }
 
-function StudentPreview(params) {
-	const [data, setData] = useState({});
-
-	useEffect(() => {
-		(async () => {
-			console.log(params.slug.slug);
-			fetch(`http://localhost:5000/users/email/${params.slug.slug}`)
-				.then((response) => {
-					if (!response.ok) {
-						throw new Error(
-							'Network response was not ok ' + response.statusText
-						);
-					}
-					return response.json(); // Parse the JSON from the response
-				})
-				.then((data) => {
-					setData(user);
-					console.log(user);
-				})
-				.catch((error) => {
-					console.error(
-						'There has been a problem with your fetch operation:',
-						error
-					);
-				});
-		})();
-	}, [data]);
+function StudentPreview({ data }) {
 	return (
 		<div className='flex flex-col gap-5 p-8 border-2 rounded-md border-zinc-800 text-nowrap text-zinc-100 h-min'>
-			{/* <Image
+			<Image
 				alt='Profile Picture'
-				width={'25'}
-				height={'25'}
-				src={
-					'https://d27jswm5an3efw.cloudfront.net/app/uploads/2019/07/how-to-make-a-url-for-a-picture-on-your-computer-4.jpg'
-				}
+				src={pfp}
 				className='w-full rounded-full'
-			></Image> */}
+			></Image>
+
 			<div className='gap-4 text-zinc-300'>
 				<h2 className='font-[600] text-zinc-100 text-xl'>
-					Arihan Sharma
+					{data.firstName + ' ' + data.lastName}{' '}
 				</h2>
-				<p className='font-[400] text-zinc-400 text-md'>@Arihan10</p>
+				<Link className='font-[400] text-md' href={data.linkedin}>
+					My Linkedin
+				</Link>
 				<hr className='h-px mt-5 mb-3 bg-gray-200 border-0 dark:bg-gray-700'></hr>
 				<div className='h-2' />
 				<Link href='https://www.google.com'>
@@ -129,7 +101,7 @@ function StudentPreview(params) {
 				</Link>
 				{false && (
 					<Markdown className='space-y-2 leading-7'>
-						{summary.desc}
+						{data.bio}
 					</Markdown>
 				)}
 			</div>
@@ -239,14 +211,29 @@ function Tabs() {
 }
 
 function StudentProfile({ params }) {
-	console.log('profile!');
+	const [data, setData] = useState(null);
+
+	useEffect(() => {
+		console.log(params.slug);
+		fetch(`/api/student/${params.slug}`)
+			.then((response) => {
+				console.log(response);
+				return response.json();
+			})
+			.then((data) => {
+				setData(data);
+				console.log(data);
+			});
+		// Also fetch all investors who have invested into this person
+	}, [params.slug]);
+
 	return (
 		<div className='flex flex-col items-center justify-center w-screen'>
 			<div className='min-w-[30rem] w-11/12 max-w-[65rem] bg-red-500/0 font-sgt p-3 rounded-lg gap-8 flex flex-row'>
-				<StudentPreview slug={params} />
+				{data && <StudentPreview data={data} />}{' '}
 				<div className='space-y-4'>
 					<Markdown className='p-10 space-y-4 border-2 rounded-md border-zinc-800'>
-						{summary.desc}
+						{data?.bio}
 					</Markdown>
 					<Tabs />
 				</div>

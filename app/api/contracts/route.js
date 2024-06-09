@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Contracts from './ContractSchema';
+import { NextResponse } from 'next/server';
 
 // Get all by studentId
 export async function GET(req) {
@@ -16,12 +17,12 @@ export async function GET(req) {
 				studentId: query.searchParams.get('studentId'),
 			});
 			console.log(contracts);
-			return new Response(JSON.stringify(contracts), { status: 200 });
+			return NextResponse.json(contracts, { status: 200 });
 		} else {
 			const contracts = await Contracts.find({
 				investorId: query.searchParams.get('investorId'),
 			});
-			return new Response(JSON.stringify(contracts), { status: 200 });
+			return NextResponse.json(contracts, { status: 200 });
 		}
 	} catch (err) {
 		return new Response(JSON.stringify(err), { status: 500 });

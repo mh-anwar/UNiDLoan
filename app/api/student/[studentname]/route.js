@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server';
 import Student from '../StudentSchema';
 import mongoose from 'mongoose';
 
@@ -11,12 +12,13 @@ export async function GET(req) {
 		await mongoose.connect(
 			'mongodb+srv://mohammad:tAPx8Xy5gM9byEsM@cluster0.xhjlbjr.mongodb.net/main?retryWrites=true&w=majority&appName=Cluster0'
 		);
-		const students = await Student.findOne({
+		const student = await Student.findOne({
 			testnetId: testnetID,
 		});
-		return new Response(JSON.stringify(students), { status: 200 });
+		console.log(student);
+		return NextResponse.json(student, { status: 200 });
 	} catch (err) {
-		return new Response(JSON.stringify(err), { status: 500 });
+		return NextResponse.json(JSON.stringify(err), { status: 500 });
 	}
 }
 
