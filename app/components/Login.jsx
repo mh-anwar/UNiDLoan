@@ -29,10 +29,10 @@ const loginAnim = {
 
 export default function Login() {
     const { displayLogin, setDisplayLogin } = useContext(UserContext);
-    const { username, setUsername } = useContext(UserContext);
+    const { nearID, setNearID } = useContext(UserContext);
 
-    const [username_, setUsername_] = useState('')
-    const [password, setPassword] = useState('')
+    const [typedID, setTypedID] = useState('')
+    const [passkey, setPasskey] = useState('')
 
     const [userState, setUserState] = useState({ state: 'empty', msg: '' })
     const [passState, setPassState] = useState({ state: 'empty', msg: '' })
@@ -46,33 +46,46 @@ export default function Login() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="w-[30rem] bg-black/95 rounded-2xl border-2 border-zinc-900/50 p-10 flex flex-col gap-5 pointer-events-auto overflow-clip"
+            className="font-sgt w-[30rem] bg-black/95 rounded-2xl border-2 border-zinc-900/50 p-10 flex flex-col gap-5 pointer-events-auto overflow-clip"
         >
-            <h1 className="font-sg text-4xl font-bold text-gray-300">Get Started!</h1>
+            <h1 className="text-4xl font-bold text-gray-300 font-sg">Get Started!</h1>
             <p className="text-gray-400">An account will allow you to save your progress, participate in contests, and more!</p>
 
             <div>
                 <label className="text-sm text-rose-600">{userState.msg}</label>
-                <input className="shadow appearance-none border border-blue-500/20 rounded w-full py-2 px-3 text-gray-300 bg-slate-950 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username"
+                <input className="px-3 py-2 w-full leading-tight text-gray-300 rounded border shadow appearance-none border-blue-500/20 bg-slate-950 focus:outline-none focus:shadow-outline" id="nearid" type="text" placeholder="Near ID"
                     onChange={e => {
-                        setUsername(e.target.value)
+                        setTypedID(e.target.value)
+                    }}
+                />
+            </div>
+
+            <div className="flex flex-row gap-5 w-full">
+                <input className="px-3 py-2 w-full leading-tight text-gray-300 rounded border shadow appearance-none border-blue-500/20 bg-slate-950 focus:outline-none focus:shadow-outline" id="firstname" type="text" placeholder="First Name"
+                    onChange={e => {
+                        setFirstName(e.target.value)
+                    }}
+                />
+                <input className="px-3 py-2 w-full leading-tight text-gray-300 rounded border shadow appearance-none border-blue-500/20 bg-slate-950 focus:outline-none focus:shadow-outline" id="lastname" type="text" placeholder="Last Name"
+                    onChange={e => {
+                        setLastName(e.target.value)
                     }}
                 />
             </div>
 
             <div>
                 <label className="text-sm text-rose-600">{passState.msg}</label>
-                <input className="shadow appearance-none border border-blue-500/20 rounded w-full py-2 px-3 text-gray-300 bg-slate-950 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password"
+                <input className="px-3 py-2 w-full leading-tight text-gray-300 rounded border shadow appearance-none border-blue-500/20 bg-slate-950 focus:outline-none focus:shadow-outline" id="passkey" type="password" placeholder="Passkey"
                     onChange={e => {
-                        setPassword(e.target.value)
+                        setPasskey(e.target.value)
                     }}
                 />
             </div>
 
-            <div className="flex flex-row w-full gap-5">
+            <div className="flex flex-row gap-5 w-full">
 
                 <button
-                    className="bg-blue-950 hover:bg-slate-950/50 duration-200 text-gray-300 font-semibold py-3 px-5 border-2 border-blue-800/20 rounded shadow inline-flex items-center grow"
+                    className="inline-flex items-center px-5 py-3 font-semibold text-gray-300 rounded border-2 shadow duration-200 bg-blue-950 hover:bg-slate-950/50 border-blue-800/20 grow"
                     onClick={() => {
                         setLoading(true);
                         console.log("start loading");
@@ -87,7 +100,7 @@ export default function Login() {
                         <path fillRule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
                         <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                     </svg>
-                    <span className="text-center w-full">Join</span>
+                    <span className="w-full text-xl text-center">Join</span>
                 </button>
             </div>
 
@@ -97,7 +110,7 @@ export default function Login() {
                 onExitComplete={() => null}
             >
                 {loading &&
-                    <motion.div className="absolute bg-black/80 w-full h-96 col-span-1 row-span-1 -m-10 flex items-center justify-center"
+                    <motion.div className="flex absolute col-span-1 row-span-1 justify-center items-center -m-10 w-full h-96 bg-black/80"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
