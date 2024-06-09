@@ -12,7 +12,7 @@ export async function GET(req) {
             .filter((student) => student.video != null)
             .map((student) => ({
                 video: student.video,
-                student: student,
+                testnetId: student.testnetId,
             }));
         return NextResponse.json(JSON.stringify(allVideos), {
             status: 200,

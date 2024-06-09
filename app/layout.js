@@ -18,10 +18,12 @@ export default function RootLayout({ children }) {
     const [displayLogin, setDisplayLogin] = useState(false);
     const [nearID, setNearID] = useState();
     const [type, setType] = useState();
+    const [privateKey, setPrivateKey] = useState();
     const [currentContract, setCurrentContract] = useState(null);
     useEffect(() => {
         setNearID(localStorage.getItem('nearID'));
         setType(localStorage.getItem('type'));
+        setPrivateKey(localStorage.getItem('privateKey'));
     }, []);
     return (
         <UserContext.Provider
@@ -38,6 +40,8 @@ export default function RootLayout({ children }) {
                 setCurrentContract: setCurrentContract,
                 type: type,
                 setType: setType,
+                privateKey: privateKey,
+                setPrivateKey: setPrivateKey,
             }}
         >
             <html lang="en" className="dark">

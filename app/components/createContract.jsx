@@ -4,6 +4,7 @@ import { UserContext } from '../layout';
 import Backdrop from '../common/backdrop';
 import { motion, AnimatePresence } from 'framer-motion';
 import BouncingDotsLoader from '../common/loader/loader';
+import { toYoctoNear, useLogin } from '../../lib/near';
 
 const loginAnim = {
     hidden: {
@@ -35,6 +36,7 @@ export default function CreateContractOverlay() {
         setDisplayCreateContract,
         currentContract,
         setCurrentContract,
+        privateKey,
     } = useContext(UserContext);
     const { user, setUser } = useContext(UserContext);
 
@@ -49,6 +51,19 @@ export default function CreateContractOverlay() {
 
     const [loading, setLoading] = useState(false);
 
+    async function sendMoney(studentId, investorId, amount) {
+        const privateKey = privateKey;
+        const accountId = investorId;
+        // retreive the above from mongodb
+
+        const nearConnection = await useLogin(privateKey, accountId);
+        const account = await nearConnection.account(accountId);
+        const final = await account.sendMoney(studentId, toYoctoNear(amount));
+        console.log(final);
+        const transactionHash = final.transaction.hash;
+        // Send transactionHash and update total monetary value in mongoDB
+        // - in the user it should increase totla monetary value, in investor it should increase total investment
+    }
     const modal = (
         <motion.div
             onClick={(e) => e.stopPropagation()}
@@ -151,6 +166,7 @@ export default function CreateContractOverlay() {
                 interestRate: interest,
             }),
         });
+        sendMoney(currentContract.testnetId, nearID, loan);
         // !! THEN INSTANTIATE THE INVEST
     }
     return (
