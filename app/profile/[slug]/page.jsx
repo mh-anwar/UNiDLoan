@@ -23,6 +23,7 @@ import {
 } from "recharts";
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "@/app/layout";
+import { Glow, GlowCapture } from "@codaworks/react-glow";
 
 const summary = {
   name: "Arihan Sharma",
@@ -44,9 +45,10 @@ const investor = {
   investors: 20,
 };
 
-function Investor(dat) {
-  const data = dat.data;
+function Investor({data}) {
+  console.log(data)
   const { displayContract, setDisplayContract } = useContext(UserContext);
+
 
   return (
     <button
@@ -55,21 +57,33 @@ function Investor(dat) {
         setDisplayContract(true)
       }}
     >
+            <GlowCapture>
+              <Glow color="white">
       <div
-        href="https://google.com"
-        className="duration-300 transition-all hover:border-[1.5px] bg-gray-50/[0.01] hover:bg-gray-50/[0.05] hover:shadow-sm border-gray-300/20 rounded-xl p-6 flex flex-col gap-3 w-full"
+        className="duration-300 transition-all border-[1.5px] bg-gray-50/[0.01] glow:bg-violet-400/5 hover:bg-gray-50/[0.05] hover:shadow-sm border-gray-300/20 rounded-xl p-6 flex flex-col gap-3 w-full"
       >
-        <div className="flex flex-row gap-2 items-center">
-          <Image
-            alt="Profile picture"
-            src={pfp}
-            className="w-14 rounded-full"
-          />
-          <h3 className="text-sm font-bold md:text-lg">{data.investorId}</h3>
-          <p className="text-gray-100/60 font-[400]">{data.loanAmount} NEAR</p>
-          <p className="text-gray-100/60 font-[400]">{data.interestRate} %</p>
+        <div className="flex flex-col gap-4 items-center">
+          <div className="flex flex-row items-center">
+            <Image
+              alt="Profile picture"
+              src={pfp}
+              className="mr-4 w-20 rounded-full"
+            />
+            <h3 className="w-min text-xs font-bold text-left whitespace-pre-wrap sm:text-2xl lg:text-3xl">
+              {data.investorName}
+            </h3>
+          </div>
+          <div>
+            <h3 className="text-gray-400 glow:text-purple-100/70 font-[700] text-7xl">{data.loanAmount}</h3>
+            <div className="flex flex-row mt-3">
+              <p className="flex-grow text-left">NEAR</p>
+              <p className="text-gray-100/60 font-[400]">{data.interestRate} %</p>
+            </div>
+          </div>
         </div>
       </div>
+              </Glow>
+            </GlowCapture>
     </button>
   );
 }
@@ -191,7 +205,7 @@ function Tabs({ data }) {
         </Tab>
       </TabList>
       <TabPanels className="leading-6 text-gray-300">
-        <TabPanel className="flex flex-col p-3 w-full h-full rounded-b-2xl border-2 border-zinc-800">
+        <TabPanel className="grid grid-cols-3 p-3 w-full h-full rounded-b-2xl border-2 border-zinc-800">
           {data?.map((investor) => {
             return <Investor key={investor.date} data={investor} />;
           })}
@@ -238,7 +252,7 @@ function StudentProfile({ params }) {
 
   return (
     <div className="flex flex-col justify-center items-center w-screen">
-      <div className="min-w-[30rem] w-11/12 max-w-[65rem] bg-red-500/0 font-sgt p-3 rounded-lg gap-8 flex flex-row">
+      <div className="min-w-[30rem] w-11/12 max-w-[85rem] bg-red-500/0 font-sgt p-3 rounded-lg gap-8 flex flex-row">
         {data && <StudentPreview data={data} investorData={investorData} />}{" "}
         <div className="space-y-4">
           <Markdown className="p-10 space-y-4 rounded-md border-2 border-zinc-800">
