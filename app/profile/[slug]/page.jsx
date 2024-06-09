@@ -59,9 +59,14 @@ function Investor(dat) {
 						className='rounded-full w-14'
 					/>
 					<h3 className='text-sm font-bold md:text-lg'>
-						{data.name}
+						{data.investorId}
 					</h3>
-					<p className='text-gray-100/60 font-[400]'>{data.desc}</p>
+					<p className='text-gray-100/60 font-[400]'>
+						{data.loanAmount} NEAR
+					</p>
+					<p className='text-gray-100/60 font-[400]'>
+						{data.interestRate} %
+					</p>
 				</div>
 			</div>
 		</button>
@@ -173,7 +178,8 @@ function PerfGraph() {
 	);
 }
 
-function Tabs() {
+function Tabs({ data }) {
+	console.log('adasda', data);
 	return (
 		<TabGroup className='flex-grow p-3'>
 			<TabList className='space-x-3'>
@@ -192,10 +198,9 @@ function Tabs() {
 			</TabList>
 			<TabPanels className='leading-6 text-gray-300'>
 				<TabPanel className='flex flex-col w-full h-full p-3 border-2 rounded-b-2xl border-zinc-800'>
-					<Investor data={investor} />
-					<Investor data={investor} />
-					<Investor data={investor} />
-					<Investor data={investor} />
+					{data?.map((investor) => {
+						return <Investor key={investor.date} data={investor} />;
+					})}
 				</TabPanel>
 				<TabPanel className='w-full h-full'>
 					<div className='flex flex-row justify-center'>
@@ -212,6 +217,7 @@ function Tabs() {
 
 function StudentProfile({ params }) {
 	const [data, setData] = useState(null);
+	const [investorData, setInvestorData] = useState(null);
 
 	useEffect(() => {
 		console.log(params.slug);
@@ -225,6 +231,15 @@ function StudentProfile({ params }) {
 				console.log(data);
 			});
 		// Also fetch all investors who have invested into this person
+		fetch(`/api/contracts?studentId=${params.slug}`)
+			.then((response) => {
+				console.log(response);
+				return response.json();
+			})
+			.then((data) => {
+				setInvestorData(data);
+				console.log(data);
+			});
 	}, [params.slug]);
 
 	return (
@@ -235,7 +250,7 @@ function StudentProfile({ params }) {
 					<Markdown className='p-10 space-y-4 border-2 rounded-md border-zinc-800'>
 						{data?.bio}
 					</Markdown>
-					<Tabs />
+					<Tabs data={investorData} />
 				</div>
 			</div>
 		</div>
