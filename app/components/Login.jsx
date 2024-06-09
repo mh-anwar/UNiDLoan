@@ -29,7 +29,8 @@ const loginAnim = {
 
 export default function Login() {
     const { displayLogin, setDisplayLogin } = useContext(UserContext);
-    const { nearID, setNearID } = useContext(UserContext);
+    const { nearID, setNearID, setType, setPrivateKey } =
+        useContext(UserContext);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [typedID, setTypedID] = useState('');
@@ -193,11 +194,15 @@ export default function Login() {
                             });
                         }
                         setNearID(typedID);
+                        setPrivateKey(passkey);
+                        setType(investor ? 'investor' : 'student');
+
                         localStorage.setItem('nearID', typedID);
                         localStorage.setItem(
                             'type',
                             investor ? 'investor' : 'student'
                         );
+                        localStorage.setItem('privateKey', passkey);
                     }}
                 >
                     <svg
