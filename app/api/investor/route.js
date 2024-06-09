@@ -29,7 +29,6 @@ export async function POST(req) {
         await Investor.findOneAndUpdate(
             {
                 testnetId: body.testnetId,
-                privatekey: body.privatekey,
             },
             body,
             {
