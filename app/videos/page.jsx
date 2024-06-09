@@ -18,7 +18,7 @@ export default function Videos() {
                 setData(data);
                 console.log(data);
             });
-    })
+    }, [])
 
     const moveUp = () => {
         if (currentIndex > 0) {
@@ -38,7 +38,7 @@ export default function Videos() {
 
     return (
         <div className="flex flex-col justify-center w-full h-full align-middle">
-            <div className="self-center overflow-scroll w-min h-max">
+            <div className="self-center w-min h-max">
                 <iframe
                     className="self-center border-none"
                     width="315"
@@ -50,7 +50,7 @@ export default function Videos() {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
                 ></iframe>
-                <Link href={data[currentIndex].testnetId} className="flex flex-row items-center justify-center gap-3 px-2 align-middle transition-all duration-200 rounded-md">
+                <Link href={"/profile/" + data[currentIndex].testnetId} className="flex flex-row items-center justify-center gap-3 px-2 align-middle transition-all duration-200 rounded-md">
                     <PersonCircle />
                     <h2 className="text-2xl">Student</h2>
                 </Link>
