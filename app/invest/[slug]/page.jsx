@@ -1,12 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LineChart, ScatterChart } from "@mui/x-charts";
 import pfp from "/public/pfp.jpg";
 import Markdown from "react-markdown";
 import { PersonCircle, } from "react-bootstrap-icons";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import Image from "next/image";
-import Backdrop from "../common/backdrop";
+import Backdrop from "../../common/backdrop";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -50,7 +50,7 @@ function Student(dat) {
         className="duration-300 transition-all hover:border-[1.5px] bg-gray-50/[0.01] hover:bg-gray-50/[0.05] hover:shadow-sm border-gray-300/20 rounded-xl p-6 flex flex-col gap-3 w-full"
       >
         <div className="flex flex-col items-center gap-2">
-          <Image src={pfp} className="w-2/3 rounded-full" />
+          <Image alt="PFP" src={pfp} className="w-2/3 rounded-full" />
           <h3 className="text-sm font-bold md:text-lg">{data.name}</h3>
         </div>
         <div className="pl-3">
@@ -88,7 +88,33 @@ function Tabs() {
   );
 }
 
-function InvestorDash() {
+function InvestorDash({params}) {
+
+  const [data, setData] = useState([]);
+  
+	useEffect(() => {
+		console.log(params.slug);
+		fetch(`/api/student/${params.slug}`)
+			.then((response) => {
+				console.log(response);
+				return response.json();
+			})
+			.then((data) => {
+				setData(data);
+				console.log(data);
+			});
+		// Also fetch all investors who have invested into this person
+		fetch(`/api/contracts?studentId=${params.slug}`)
+			.then((response) => {
+				console.log(response);
+				return response.json();
+			})
+			.then((data) => {
+				setInvestorData(data);
+				console.log(data);
+			});
+  }, [params.slug]);
+  
   return (
     <div className="flex flex-col items-center justify-center w-screen font-sgt">
       <div className="min-w-[20rem] max-w-[65rem] w-11/12 font-sgt p-3 rounded-lg gap-8 flex flex-row">
