@@ -9,8 +9,11 @@ export async function GET(req) {
         const students = await Student.find();
         // Get all video fields from every student and return
         const allVideos = students
-            .map((student) => student.video)
-            .filter((video) => video != null);
+            .filter((student) => student.video != null)
+            .map((student) => ({
+                video: student.video,
+                student: student,
+            }));
         return NextResponse.json(JSON.stringify(allVideos), {
             status: 200,
         });
