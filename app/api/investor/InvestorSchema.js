@@ -2,18 +2,22 @@ import { Schema, model } from 'mongoose';
 import mongoose from 'mongoose';
 
 const InvestorSchema = new Schema({
-	firstName: {
-		type: String,
-		required: true,
-	},
-	lastName: {
-		type: String,
-		required: true,
-	},
-	testnetId: {
-		type: String,
-		required: true,
-	},
+    firstName: {
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
+    },
+    testnetId: {
+        type: String,
+        required: true,
+    },
+    privateKey: {
+        type: String,
+        required: true,
+    },
 });
 
 const Investor = mongoose.models.Investor || model('Investor', InvestorSchema);

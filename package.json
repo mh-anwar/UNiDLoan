@@ -9,9 +9,11 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@codaworks/react-glow": "^1.0.6",
 		"@emotion/react": "^11.11.4",
 		"@emotion/styled": "^11.11.5",
 		"@headlessui/react": "^2.0.4",
+		"@headlessui/tailwindcss": "^0.2.1",
 		"@mui/x-charts": "^7.6.2",
 		"framer-motion": "^11.2.10",
 		"mongoose": "^8.4.1",

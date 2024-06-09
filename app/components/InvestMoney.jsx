@@ -1,4 +1,5 @@
 'use client';
+import { Wallet2 } from 'react-bootstrap-icons';
 import { toYoctoNear, useLogin } from '../../lib/near';
 
 // Sample button
@@ -22,8 +23,9 @@ export default function InvestMoney() {
 	}
 
 	return (
-		<div>
-			<button onClick={sendMoney}>Invest Money</button>
-		</div>
+		<button onClick={sendMoney} className="flex flex-row gap-4 items-center shadow-md">
+			<Wallet2/>
+			Invest Money
+		</button>
 	);
 }
