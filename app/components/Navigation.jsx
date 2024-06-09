@@ -10,8 +10,9 @@ import Link from 'next/link';
 
 export function Navigation() {
     const [label, setLabel] = useState('Log In');
-    const { displayLogin, setDisplayLogin, nearID } = useContext(UserContext);
-
+    const { displayLogin, setDisplayLogin, nearID, type } =
+        useContext(UserContext);
+    const url = '/' + type == 'student' ? 'student' : 'investor' + '/' + nearID;
     return (
         <nav className="flex flex-row justify-end w-full gap-5 p-5 border-b-2 font-sgt bg-slate-800/10 border-zinc-700/40">
             <div className="flex-grow">
@@ -28,9 +29,12 @@ export function Navigation() {
 
             <InvestMoney />
             {nearID ? (
-                <div className="flex flex-row items-center gap-3 px-2 transition-all duration-200 border-2 border-green-800 rounded-md shadow-md hover:bg-green-500 hover:border-green-900 hover:text-zinc-900 bg-green-900/20">
+                <Link
+                    href={url}
+                    className="flex flex-row items-center gap-3 px-2 transition-all duration-200 border-2 border-green-800 rounded-md shadow-md hover:bg-green-500 hover:border-green-900 hover:text-zinc-900 bg-green-900/20"
+                >
                     <PersonCircle /> My Home
-                </div>
+                </Link>
             ) : (
                 <button
                     className="flex flex-row items-center gap-3 transition-all duration-200 border-2 border-green-800 shadow-md hover:bg-green-500 hover:border-green-900 hover:text-zinc-900 bg-green-900/20"

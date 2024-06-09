@@ -36,6 +36,8 @@ export default function RootLayout({ children }) {
                 setDisplayLogin: setDisplayLogin,
                 currentContract: currentContract,
                 setCurrentContract: setCurrentContract,
+                type: type,
+                setType: setType,
             }}
         >
             <html lang="en" className="dark">
