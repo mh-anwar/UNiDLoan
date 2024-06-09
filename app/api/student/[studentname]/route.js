@@ -28,10 +28,17 @@ export async function POST(req) {
 
     try {
         await mongoose.connect(process.env.MONGODB);
-        await Student.findOneAndUpdate(body, {
-            upsert: true,
-            setDefaultsOnInsert: true,
-        }); // body should have all the required fields
+        await Student.findOneAndUpdate(
+            {
+                testnetId: body.testnetId,
+                bio: body.bio,
+            },
+            body,
+            {
+                upsert: true,
+                new: true,
+            }
+        ); // body should have all the required fields
         return new Response({ status: 201 });
     } catch (err) {
         if (err instanceof mongoose.Error.ValidationError) {
