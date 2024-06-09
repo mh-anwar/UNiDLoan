@@ -22,6 +22,10 @@ const ContractsSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	investor: {
+		type: Schema.Types.ObjectId,
+		ref: 'Investor',
+	},
 });
 
 const Contracts =
