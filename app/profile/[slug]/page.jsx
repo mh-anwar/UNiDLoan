@@ -73,7 +73,7 @@ function Investor(dat) {
 	);
 }
 
-function StudentPreview({ data }) {
+function StudentPreview({ data, investorData }) {
 	return (
 		<div className='flex flex-col gap-5 p-8 border-2 rounded-md border-zinc-800 text-nowrap text-zinc-100 h-min'>
 			<Image
@@ -100,7 +100,7 @@ function StudentPreview({ data }) {
 					>
 						<PeopleFill />
 						<p>
-							<b>{summary.investors}</b> Investors
+							<b>{investorData.length}</b> Investors
 						</p>
 					</div>
 				</Link>
@@ -245,7 +245,9 @@ function StudentProfile({ params }) {
 	return (
 		<div className='flex flex-col items-center justify-center w-screen'>
 			<div className='min-w-[30rem] w-11/12 max-w-[65rem] bg-red-500/0 font-sgt p-3 rounded-lg gap-8 flex flex-row'>
-				{data && <StudentPreview data={data} />}{' '}
+				{data && (
+					<StudentPreview data={data} investorData={investorData} />
+				)}{' '}
 				<div className='space-y-4'>
 					<Markdown className='p-10 space-y-4 border-2 rounded-md border-zinc-800'>
 						{data?.bio}

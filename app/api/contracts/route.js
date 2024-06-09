@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import Contracts from './ContractSchema';
 import { NextResponse } from 'next/server';
 import Investor from '../investor/InvestorSchema';
+import Student from '../student/StudentSchema';
 
 // Get all by studentId
 export async function GET(req) {
@@ -35,14 +36,10 @@ export async function HEAD(req) {}
 export async function POST(req) {
 	// Create a new investor
 	const body = await req.json();
-	const investor = await Investor.findOne({
-		testnetId: body.investorId,
-	});
 	try {
 		await mongoose.connect(process.env.MONGODB);
 		await Contracts.create({
 			...body,
-			investor: investor,
 		}); // body should have all the required fields
 		return new Response({ status: 201 });
 	} catch (err) {

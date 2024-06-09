@@ -10,6 +10,10 @@ const InvestorSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	testnetId: {
+		type: String,
+		required: true,
+	},
 });
 
 const Investor = mongoose.models.Investor || model('Investor', InvestorSchema);
