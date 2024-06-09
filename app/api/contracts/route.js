@@ -25,7 +25,7 @@ export async function GET(req) {
         // Update the read field to true for all fetched contracts
         await Contracts.updateMany(
             { _id: { $in: contractIds } },
-            { read: true }
+            { $inc: { read: 1 } }
         );
 
         return NextResponse.json(contracts, { status: 200 });

@@ -12,7 +12,7 @@ export function Navigation() {
     const [label, setLabel] = useState('Log In');
     const { displayLogin, setDisplayLogin, nearID, type } =
         useContext(UserContext);
-    const url = '/' + type == 'student' ? 'student' : 'invest' + '/' + nearID;
+    const url = '/' + (type == 'student' ? 'profile' : 'invest') + '/' + nearID;
     return (
         <nav className="flex flex-row justify-end w-full gap-5 p-5 border-b-2 font-sgt bg-slate-800/10 border-zinc-700/40">
             <div className="flex-grow">
@@ -27,7 +27,6 @@ export function Navigation() {
                 </button>
             </div>
 
-            <InvestMoney />
             {nearID ? (
                 <Link
                     href={url}

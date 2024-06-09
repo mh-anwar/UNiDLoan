@@ -26,8 +26,8 @@ const ContractsSchema = new Schema({
         required: true,
     },
     read: {
-        type: Boolean,
-        default: false,
+        type: Number,
+        default: 0,
         // on first offer, the student has to read the contract
         // on second and future offers this will be set to true
     },
