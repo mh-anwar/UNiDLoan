@@ -34,6 +34,8 @@ export default function Login() {
     const [lastName, setLastName] = useState('');
     const [typedID, setTypedID] = useState('');
     const [passkey, setPasskey] = useState('');
+    const [youtubeURL, setYoutubeURL] = useState('');
+    const [linkedinURL, setLinkedinURL] = useState('');
     const [investor, setInvestor] = useState(false);
     const [userState, setUserState] = useState({ state: 'empty', msg: '' });
     const [passState, setPassState] = useState({ state: 'empty', msg: '' });
@@ -104,6 +106,32 @@ export default function Login() {
             </div>
 
             <div>
+                <label className="text-sm text-rose-600">{passState.msg}</label>
+                <input
+                    className="w-full px-3 py-2 leading-tight text-gray-300 border rounded shadow appearance-none border-blue-500/20 bg-slate-950 focus:outline-none focus:shadow-outline"
+                    id="youtubeURL"
+                    type="text"
+                    placeholder="Youtube Video URL"
+                    onChange={(e) => {
+                        setYoutubeURL(e.target.value);
+                    }}
+                />
+            </div>
+
+            <div>
+                <label className="text-sm text-rose-600">{passState.msg}</label>
+                <input
+                    className="w-full px-3 py-2 leading-tight text-gray-300 border rounded shadow appearance-none border-blue-500/20 bg-slate-950 focus:outline-none focus:shadow-outline"
+                    id="linkedinURL"
+                    type="text"
+                    placeholder="Linkedin Video URL"
+                    onChange={(e) => {
+                        setLinkedinURL(e.target.value);
+                    }}
+                />
+            </div>
+
+            <div>
                 <input
                     type="checkbox"
                     name="investor"
@@ -128,6 +156,8 @@ export default function Login() {
                                     firstName: firstName,
                                     lastName: lastName,
                                     privateKey: passkey,
+                                    video: youtubeURL,
+                                    linkedin: linkedinURL,
                                 }),
                             }).then((res) => {
                                 if (res.status === 201 || res.status === 200) {
@@ -150,8 +180,8 @@ export default function Login() {
                                         lastName: lastName,
                                         privateKey: passkey,
                                         bio: '',
-                                        linkedin: '',
-                                        video: '',
+                                        linkedin: linkedinURL,
+                                        video: youtubeURL,
                                     }),
                                 }
                             ).then((res) => {
