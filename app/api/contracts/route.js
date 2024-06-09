@@ -9,9 +9,7 @@ export async function GET(req) {
 
 	// Check if studentId or investorId is in the query
 	try {
-		await mongoose.connect(
-			'mongodb+srv://mohammad:tAPx8Xy5gM9byEsM@cluster0.xhjlbjr.mongodb.net/main?retryWrites=true&w=majority&appName=Cluster0'
-		);
+		await mongoose.connect(process.env.MONGODB);
 		if (query.searchParams.get('studentId')) {
 			const contracts = await Contracts.find({
 				studentId: query.searchParams.get('studentId'),
@@ -38,9 +36,7 @@ export async function POST(req) {
 	const body = await req.json();
 
 	try {
-		await mongoose.connect(
-			'mongodb+srv://mohammad:tAPx8Xy5gM9byEsM@cluster0.xhjlbjr.mongodb.net/main?retryWrites=true&w=majority&appName=Cluster0'
-		);
+		await mongoose.connect(process.env.MONGODB);
 		await Contracts.create(body); // body should have all the required fields
 		return new Response({ status: 201 });
 	} catch (err) {

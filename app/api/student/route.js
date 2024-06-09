@@ -5,9 +5,7 @@ import mongoose from 'mongoose';
 export async function GET(req) {
 	// Get all students
 	try {
-		await mongoose.connect(
-			'mongodb+srv://mohammad:tAPx8Xy5gM9byEsM@cluster0.xhjlbjr.mongodb.net/main?retryWrites=true&w=majority&appName=Cluster0'
-		);
+		await mongoose.connect(process.env.MONGODB);
 		const students = await Student.find();
 		return new Response(JSON.stringify(students), { status: 200 });
 	} catch (err) {
