@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
 
 const InvestorSchema = new Schema({
 	firstName: {
@@ -6,6 +7,10 @@ const InvestorSchema = new Schema({
 		required: true,
 	},
 	lastName: {
+		type: String,
+		required: true,
+	},
+	testnetId: {
 		type: String,
 		required: true,
 	},
