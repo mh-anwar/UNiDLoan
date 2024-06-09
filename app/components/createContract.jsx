@@ -40,7 +40,7 @@ export default function CreateContractOverlay() {
     } = useContext(UserContext);
     const { user, setUser } = useContext(UserContext);
 
-    const [username, setUsername] = useState('');
+    const [message, setMessage] = useState('');
     const [loan, setLoan] = useState('');
     const [interest, setInterest] = useState('');
 
@@ -52,7 +52,6 @@ export default function CreateContractOverlay() {
     const [loading, setLoading] = useState(false);
 
     async function sendMoney(studentId, investorId, amount) {
-        const privateKey = privateKey;
         const accountId = investorId;
         // retreive the above from mongodb
 
@@ -92,7 +91,7 @@ export default function CreateContractOverlay() {
                     type="text"
                     placeholder="Agreement (message to student)"
                     onChange={(e) => {
-                        setUsername(e.target.value);
+                        setMessage(e.target.value);
                     }}
                 />
             </div>
@@ -164,6 +163,7 @@ export default function CreateContractOverlay() {
                 investorId: nearID,
                 loanAmount: loan,
                 interestRate: interest,
+                message: message,
             }),
         });
         sendMoney(currentContract.testnetId, nearID, loan);
