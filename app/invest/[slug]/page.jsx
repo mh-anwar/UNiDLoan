@@ -43,9 +43,29 @@ const summary = {
     investors: 20,
 };
 
+function Student2(dat) {
+
+  const { displayCreateContract, setDisplayCreateContract } = useContext(UserContext);
+  const data = dat.data;
+
+  return (
+    <button className="py-5 bg-transparent">
+      <Link
+        href={'/profile/' + data.testnetId}
+        className="duration-300 text-zinc-100 hover:text-green-400 transition-all hover:border-[1.5px] bg-gray-50/[0.01] hover:bg-gray-50/[0.05] hover:shadow-sm border-gray-300/20 rounded-xl p-6 flex flex-col gap-3 w-full"
+      >
+        <div className="flex flex-col gap-5 items-center">
+          <Image src={pfp} className="w-2/3 rounded-full" />
+          <h3 className="text-sm font-[400] md:text-[1.1rem]">{data.firstName + " " + data.lastName}</h3>
+        </div>
+      </Link>
+    </button>
+  );
+}
+
 function Student(dat)
 {
-    const { displayCrearteContract, setDisplayCrearteContract } = useContext(UserContext);
+    const { displayCreateContract, setDisplayCreateContract } = useContext(UserContext);
     const data = dat.data;
 
     return (
@@ -66,7 +86,7 @@ function Student(dat)
             {data.bio}
           </div> */}
                 <button onClick={() => {
-
+                  setDisplayCreateContract(true)
                 }}>Create Contract</button>
             </div>
         </div>
@@ -87,7 +107,7 @@ function Tabs({ data }) {
             <TabPanels className="text-gray-300">
                 <TabPanel className="grid grid-cols-2 p-3 w-full h-full rounded-b-2xl border-2 border-zinc-800 md:grid-cols-4 xl:grid-cols-4">
                     {data.map((student) => (
-                        <Student key={student._id} data={student} />
+                        <Student2 key={student._id} data={student} />
                     ))}
                 </TabPanel>
             </TabPanels>

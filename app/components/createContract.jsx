@@ -28,9 +28,9 @@ const loginAnim = {
     },
 }
 
-export default function CreateContractOverlay() {
-
-    const { displayContract, setDisplayContract } = useContext(UserContext);
+export default function CreateContractOverlay()
+{
+    const { displayCreateContract, setDisplayCreateContract } = useContext(UserContext);
     const { user, setUser } = useContext(UserContext);
 
     const [username, setUsername] = useState('')
@@ -48,38 +48,38 @@ export default function CreateContractOverlay() {
             exit="exit"
             className="font-sgt w-[43rem] bg-black/95 rounded-2xl border-2 border-zinc-900/50 p-10 flex flex-col gap-5 pointer-events-auto overflow-clip"
         >
-            <h1 className="font-sg text-4xl font-bold text-gray-300">Create Contract</h1>
+            <h1 className="text-4xl font-bold text-gray-300 font-sg">Create Contract</h1>
             <p className="text-gray-400">Please enter the terms of the agreement, including a message, loan amount and interest rate. Please note these statements are <b>legally binding.</b></p>
             <div>
                 <label className="text-sm text-rose-600">{messageState.msg}</label>
-                <textarea className="shadow h-32 appearance-none border border-blue-500/20 rounded w-full py-2 px-3 text-gray-300 bg-slate-950 leading-tight focus:outline-none focus:shadow-outline" id="agreement" type="text" placeholder="Agreement (message to student)"
+                <textarea className="px-3 py-2 w-full h-32 leading-tight text-gray-300 rounded border shadow appearance-none border-blue-500/20 bg-slate-950 focus:outline-none focus:shadow-outline" id="agreement" type="text" placeholder="Agreement (message to student)"
                     onChange={e => {
                         setUsername(e.target.value)
                     }}
                 />
             </div>
 
-            <div className="flex flex-row w-full gap-5 h-14">
-                <input className="shadow h-full appearance-none border border-blue-500/20 rounded w-full py-2 px-3 text-gray-300 bg-slate-950 leading-tight focus:outline-none focus:shadow-outline" id="agreement" type="text" placeholder="Loan"
+            <div className="flex flex-row gap-5 w-full h-14">
+                <input className="px-3 py-2 w-full h-full leading-tight text-gray-300 rounded border shadow appearance-none border-blue-500/20 bg-slate-950 focus:outline-none focus:shadow-outline" id="agreement" type="text" placeholder="Loan"
                     onChange={e => {
                         setUsername(e.target.value)
                     }}
                 />
-                <input className="shadow h-full appearance-none border border-blue-500/20 rounded w-full py-2 px-3 text-gray-300 bg-slate-950 leading-tight focus:outline-none focus:shadow-outline" id="agreement" type="text" placeholder="Interest"
+                <input className="px-3 py-2 w-full h-full leading-tight text-gray-300 rounded border shadow appearance-none border-blue-500/20 bg-slate-950 focus:outline-none focus:shadow-outline" id="agreement" type="text" placeholder="Interest"
                     onChange={e => {
                         setUsername(e.target.value)
                     }}
                 />
             </div>
 
-            <div className="flex flex-row w-full gap-5">
+            <div className="flex flex-row gap-5 w-full">
                 <button
-                    className="bg-blue-950 hover:bg-slate-950/50 duration-200 text-gray-300 font-semibold py-3 px-4 border-2 border-blue-800/20 rounded shadow inline-flex items-center grow"
+                    className="inline-flex items-center px-4 py-3 font-semibold text-gray-300 rounded border-2 shadow duration-200 bg-blue-950 hover:bg-slate-950/50 border-blue-800/20 grow"
                     onClick={() => {
                         setLoading(true);
                         console.log("start loading");
                     }}>
-                    <span className="text-center w-full">Submit</span>
+                    <span className="w-full text-center">Submit</span>
                 </button>
             </div>
 
@@ -89,7 +89,7 @@ export default function CreateContractOverlay() {
                 onExitComplete={() => null}
             >
                 {loading &&
-                    <motion.div className="absolute bg-black/80 w-full h-96 col-span-1 row-span-1 -m-10 flex items-center justify-center"
+                    <motion.div className="flex absolute col-span-1 row-span-1 justify-center items-center -m-10 w-full h-96 bg-black/80"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -106,7 +106,7 @@ export default function CreateContractOverlay() {
             onClick={() => {
                 if(!loading)
                 {
-                    setDisplayContract(false)
+                    setDisplayCreateContract(false)
                 }
             }}
             children={modal}>

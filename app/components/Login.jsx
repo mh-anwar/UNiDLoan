@@ -49,7 +49,7 @@ export default function Login() {
             className="font-sgt w-[30rem] bg-black/95 rounded-2xl border-2 border-zinc-900/50 p-10 flex flex-col gap-5 pointer-events-auto overflow-clip"
         >
             <h1 className="text-4xl font-bold text-gray-300 font-sg">Get Started!</h1>
-            <p className="text-gray-400">An account will allow you to save your progress, participate in contests, and more!</p>
+            <p className="text-gray-400">You must log in before accessing our services.</p>
 
             <div>
                 <label className="text-sm text-rose-600">{userState.msg}</label>

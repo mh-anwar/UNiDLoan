@@ -14,25 +14,29 @@ export const UserContext = React.createContext(null);
 // Layout Component
 export default function RootLayout({ children })
 {
+  const [displayCreateContract, setDisplayCreateContract ] = useState(false);
   const [displayContract, setDisplayContract] = useState(false);
   const [displayLogin, setDisplayLogin] = useState(false);
   const [username, setUsername] = useState("");
 
   return (
     <UserContext.Provider value={{ displayContract: displayContract, setDisplayContract: setDisplayContract, username: username, setUsername: setUsername, displayLogin: displayLogin, setDisplayLogin: setDisplayLogin }}>
-      <html lang="en">
+      <html lang="en" className="dark">
         <body className="flex flex-col">
-          <Navigation />
-          {children}
-
-          <AnimatePresence
-            initial={false}
-            mode="wait"
-            onExitComplete={() => null}
-          >
-            {displayContract && <CreateContractOverlay />}
-            {displayLogin && <Login />}
-          </AnimatePresence>
+          <div className="w-full h-screen">
+            <Navigation />
+            <br/>
+            {children}
+            <AnimatePresence
+              initial={false}
+              mode="wait"
+              onExitComplete={() => null}
+            >
+              {displayCreateContract && <CreateContractOverlay />}
+              {displayContract && <ContractOverlay/>}
+              {displayLogin && <Login/>}
+            </AnimatePresence>
+          </div>
 
         </body>
       </html>

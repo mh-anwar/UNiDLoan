@@ -7,7 +7,7 @@ import {
   GraphUpArrow,
   Coin,
 } from "react-bootstrap-icons";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import { Button, Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import Link from "next/link";
 import Image from "next/image";
 import pfp from "/public/pfp.jpg";
@@ -21,7 +21,8 @@ import {
   ResponsiveContainer,
   Line,
 } from "recharts";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { UserContext } from "@/app/layout";
 
 const summary = {
   name: "Arihan Sharma",
@@ -45,18 +46,24 @@ const investor = {
 
 function Investor(dat) {
   const data = dat.data;
+  const { displayContract, setDisplayContract } = useContext(UserContext);
 
   return (
-    <button className="p-3 bg-transparent">
+    <button
+      className="p-3 bg-transparent"
+      onClick={() => {
+        setDisplayContract(true)
+      }}
+    >
       <div
         href="https://google.com"
         className="duration-300 transition-all hover:border-[1.5px] bg-gray-50/[0.01] hover:bg-gray-50/[0.05] hover:shadow-sm border-gray-300/20 rounded-xl p-6 flex flex-col gap-3 w-full"
       >
-        <div className="flex flex-row items-center gap-2">
+        <div className="flex flex-row gap-2 items-center">
           <Image
             alt="Profile picture"
             src={pfp}
-            className="rounded-full w-14"
+            className="w-14 rounded-full"
           />
           <h3 className="text-sm font-bold md:text-lg">{data.investorId}</h3>
           <p className="text-gray-100/60 font-[400]">{data.loanAmount} NEAR</p>
@@ -69,7 +76,7 @@ function Investor(dat) {
 
 function StudentPreview({ data, investorData }) {
   return (
-    <div className="flex flex-col gap-5 p-8 border-2 rounded-md border-zinc-800 text-nowrap text-zinc-100 h-min">
+    <div className="flex flex-col gap-5 p-8 rounded-md border-2 border-zinc-800 text-nowrap text-zinc-100 h-min">
       <Image
         alt="Profile Picture"
         src={pfp}
@@ -80,24 +87,34 @@ function StudentPreview({ data, investorData }) {
         <h2 className="font-[600] text-zinc-100 text-xl">
           {data.firstName + " " + data.lastName}{" "}
         </h2>
-        <Link className="font-[400] text-md" href={data.linkedin}>
-          My Linkedin
-        </Link>
-        <hr className="h-px mt-5 mb-3 bg-gray-200 border-0 dark:bg-gray-700"></hr>
+        <hr className="mt-5 mb-3 h-px bg-gray-200 border-0 dark:bg-gray-700"></hr>
         <div className="h-2" />
-        <Link href="https://www.google.com">
+        <div className="space-y-4">
+          <Link
+            className=" flex flex-row items-center gap-2 hover:font-[900] transition-all duration-500
+            border-[2px] border-transparent hover:border-blue-700
+            bg-blue-700 hover:text-zinc-50
+            text-zinc-300 hover:bg-slate-800
+            rounded-lg py-[0.3rem] justify-center"
+            href={data.linkedin}
+          >
+            <Linkedin />
+            LinkedIn
+          </Link>
+
           <div
             className="flex flex-row items-center gap-2 hover:font-[900] transition-all duration-500
-						border-[2px] border-emerald-700
-						text-emerald-500 hover:text-emerald-300
-						rounded-lg py-[0.2rem] justify-center"
+            border-[2px] border-emerald-700
+            text-emerald-500 hover:text-emerald-300
+            rounded-lg py-[0.2rem] justify-center"
           >
             <PeopleFill />
             <p>
               <b>{investorData.length}</b> Investors
             </p>
           </div>
-        </Link>
+
+        </div>
         {false && (
           <Markdown className="space-y-2 leading-7">{data.bio}</Markdown>
         )}
@@ -160,21 +177,21 @@ function Tabs({ data }) {
   return (
     <TabGroup className="flex-grow p-3">
       <TabList className="space-x-3">
-        <Tab className="py-2 transition-all duration-300 border-2 border-b-0 rounded-lg rounded-b-none outline-none border-zinc-800 ui-not-selected:opacity-40 hover:border-zinc-500 ui-selected:border-green-500/60 ui-selected:bg-green-950/30 hover:px-7 ui-selected:px-10">
-          <div className="flex flex-row items-center gap-3">
+        <Tab className="py-2 rounded-lg rounded-b-none border-2 border-b-0 transition-all duration-300 outline-none border-zinc-800 ui-not-selected:opacity-40 hover:border-zinc-500 ui-selected:border-green-500/60 ui-selected:bg-green-950/30 hover:px-7 ui-selected:px-10">
+          <div className="flex flex-row gap-3 items-center">
             <Coin />
             Investors
           </div>
         </Tab>
-        <Tab className="py-2 transition-all duration-300 border-2 border-b-0 rounded-lg rounded-b-none outline-none border-zinc-800 ui-not-selected:opacity-40 hover:border-zinc-500 ui-selected:border-green-500/60 ui-selected:bg-green-950/30 hover:px-7 ui-selected:px-10">
-          <div className="flex flex-row items-center gap-3">
+        <Tab className="py-2 rounded-lg rounded-b-none border-2 border-b-0 transition-all duration-300 outline-none border-zinc-800 ui-not-selected:opacity-40 hover:border-zinc-500 ui-selected:border-green-500/60 ui-selected:bg-green-950/30 hover:px-7 ui-selected:px-10">
+          <div className="flex flex-row gap-3 items-center">
             <GraphUpArrow />
             Performance
           </div>
         </Tab>
       </TabList>
       <TabPanels className="leading-6 text-gray-300">
-        <TabPanel className="flex flex-col w-full h-full p-3 border-2 rounded-b-2xl border-zinc-800">
+        <TabPanel className="flex flex-col p-3 w-full h-full rounded-b-2xl border-2 border-zinc-800">
           {data?.map((investor) => {
             return <Investor key={investor.date} data={investor} />;
           })}
@@ -220,11 +237,11 @@ function StudentProfile({ params }) {
   }, [params.slug]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-screen">
+    <div className="flex flex-col justify-center items-center w-screen">
       <div className="min-w-[30rem] w-11/12 max-w-[65rem] bg-red-500/0 font-sgt p-3 rounded-lg gap-8 flex flex-row">
         {data && <StudentPreview data={data} investorData={investorData} />}{" "}
         <div className="space-y-4">
-          <Markdown className="p-10 space-y-4 border-2 rounded-md border-zinc-800">
+          <Markdown className="p-10 space-y-4 rounded-md border-2 border-zinc-800">
             {data?.bio}
           </Markdown>
           <Tabs data={investorData} />
