@@ -110,7 +110,7 @@ function StudentPreview({ data, investorData }) {
           >
             <PeopleFill />
             <p>
-              <b>{investorData.length}</b> Investors
+              <b>{investorData && investorData.length}</b> Investors
             </p>
           </div>
 
