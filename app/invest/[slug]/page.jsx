@@ -41,12 +41,15 @@ const summary = {
     investors: 20,
 };
 
-function Student2({ data }) {
-    const { displayCreateContract, setDisplayCreateContract } =
-        useContext(UserContext);
-    console.log(displayCreateContract);
+function Student2({ data, special = false }) {
+    const {
+        displayCreateContract,
+        setDisplayCreateContract,
+        currentContract,
+        setCurrentContract,
+    } = useContext(UserContext);
     return (
-        <div className="flex flex-col">
+        <div className={'flex flex-col'}>
             <button className="py-5 bg-transparent">
                 <Link
                     href={'/profile/' + data.testnetId}
@@ -67,6 +70,7 @@ function Student2({ data }) {
             <button
                 className="self-center w-fit"
                 onClick={() => {
+                    setCurrentContract(data);
                     setDisplayCreateContract(true);
                 }}
             >
@@ -76,7 +80,7 @@ function Student2({ data }) {
     );
 }
 
-function Tabs({ data }) {
+function Tabs({ data, investorData }) {
     return (
         <TabGroup className="p-3 flex-grow min-w-[20rem] max-w-[65rem] w-11/12">
             <TabList className="space-x-3">
@@ -89,9 +93,10 @@ function Tabs({ data }) {
             </TabList>
             <TabPanels className="text-gray-300">
                 <TabPanel className="grid w-full h-full grid-cols-2 p-3 border-2 rounded-b-2xl border-zinc-800 md:grid-cols-4 xl:grid-cols-4">
-                    {data?.map((student) => (
-                        <Student2 key={student._id} data={student} />
-                    ))}
+                    {data.map((student) => {
+                        // Return the Student2 component for each student
+                        return <Student2 key={student._id} data={student} />;
+                    })}
                 </TabPanel>
             </TabPanels>
         </TabGroup>
@@ -101,6 +106,8 @@ function Tabs({ data }) {
 function InvestorDash({ params }) {
     const [data, setData] = useState([]);
     const [investorData, setInvestorData] = useState([]);
+    const { nearId } = useContext(UserContext);
+
     useEffect(() => {
         fetch(`/api/student/`)
             .then((response) => {
@@ -109,8 +116,8 @@ function InvestorDash({ params }) {
             .then((data) => {
                 setData(data);
             });
-        // Also fetch all investors who have invested into this person
-        fetch(`/api/contracts?studentId=${params.slug}`)
+        // Also fetch everyone this investor has invested in
+        fetch(`/api/contracts?investorId=${params.slug}`)
             .then((response) => {
                 return response.json();
             })
@@ -130,7 +137,7 @@ function InvestorDash({ params }) {
                     </h1>
                 </div>
             </div>
-            <Tabs data={data} />
+            <Tabs data={data} investorData={investorData} />
         </div>
     );
 }

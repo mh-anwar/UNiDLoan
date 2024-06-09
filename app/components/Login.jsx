@@ -163,7 +163,11 @@ export default function Login() {
                             });
                         }
                         setNearID(typedID);
-                        // !! I think this will cause problems, it should be username?
+                        localStorage.setItem('nearID', typedID);
+                        localStorage.setItem(
+                            'type',
+                            investor ? 'investor' : 'student'
+                        );
                     }}
                 >
                     <svg

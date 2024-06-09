@@ -1,7 +1,7 @@
 'use client';
 import '@/app/globals.css';
 import { Navigation } from './components/Navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ContractOverlay from './components/contract';
 import { useState } from 'react';
@@ -16,8 +16,13 @@ export default function RootLayout({ children }) {
     const [displayCreateContract, setDisplayCreateContract] = useState(false);
     const [displayContract, setDisplayContract] = useState(false);
     const [displayLogin, setDisplayLogin] = useState(false);
-    const [nearID, setNearID] = useState('');
-
+    const [nearID, setNearID] = useState();
+    const [type, setType] = useState();
+    const [currentContract, setCurrentContract] = useState(null);
+    useEffect(() => {
+        setNearID(localStorage.getItem('nearID'));
+        setType(localStorage.getItem('type'));
+    }, []);
     return (
         <UserContext.Provider
             value={{
@@ -29,6 +34,8 @@ export default function RootLayout({ children }) {
                 setNearID: setNearID,
                 displayLogin: displayLogin,
                 setDisplayLogin: setDisplayLogin,
+                currentContract: currentContract,
+                setCurrentContract: setCurrentContract,
             }}
         >
             <html lang="en" className="dark">
