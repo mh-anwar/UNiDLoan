@@ -54,7 +54,7 @@ export default function CreateContractOverlay() {
     async function sendMoney(studentId, investorId, amount) {
         const accountId = investorId;
         // retreive the above from mongodb
-
+        console.log(privateKey, accountId, studentId, amount);
         const nearConnection = await useLogin(privateKey, accountId);
         const account = await nearConnection.account(accountId);
         const final = await account.sendMoney(studentId, toYoctoNear(amount));
@@ -127,7 +127,23 @@ export default function CreateContractOverlay() {
                 >
                     <span
                         className="w-full text-center"
-                        onClick={createContract}
+                        onClick={() => {
+                            fetch('/api/contracts', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    studentId: currentContract.testnetId,
+                                    investorId: nearID,
+                                    loanAmount: parseInt(loan),
+                                    interestRate: parseFloat(interest),
+                                    message: message,
+                                }),
+                            });
+                            sendMoney(currentContract.testnetId, nearID, loan);
+                            // !! THEN INSTANTIATE THE INVEST
+                        }}
                     >
                         Submit
                     </span>
@@ -152,23 +168,7 @@ export default function CreateContractOverlay() {
             </AnimatePresence>
         </motion.div>
     );
-    function createContract(contract, userId, receiverId) {
-        fetch('/contract', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                studentId: currentContract.testnetId,
-                investorId: nearID,
-                loanAmount: loan,
-                interestRate: interest,
-                message: message,
-            }),
-        });
-        sendMoney(currentContract.testnetId, nearID, loan);
-        // !! THEN INSTANTIATE THE INVEST
-    }
+
     return (
         <Backdrop
             onClick={() => {

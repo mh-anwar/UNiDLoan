@@ -37,19 +37,18 @@ export async function GET(req) {
 export async function POST(req) {
     // Create a new investor
     const body = await req.json();
+    console.log(body);
     try {
         await mongoose.connect(process.env.MONGODB);
         // Get investor and student name
         const student = await Student.findOne({
             testnetId: body.studentId,
         });
-        const investor = await Investor.findOne({
-            testnetId: body.investorId,
-        });
+        const studentName = student.firstName;
+
         await Contracts.create({
             ...body,
-            studentName: student.firstName + ' ' + student.lastName,
-            investorName: investor.firstName + ' ' + investor.lastName,
+            studentName: studentName,
         }); // body should have all the required fields
         return NextResponse.json({ status: 200 });
     } catch (err) {

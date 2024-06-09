@@ -31,10 +31,10 @@ const ContractsSchema = new Schema({
         // on first offer, the student has to read the contract
         // on second and future offers this will be set to true
     },
-    investorName: {
+    /*   investorName: {
         type: String,
         required: true,
-    },
+    }, */
     studentName: {
         type: String,
         required: true,

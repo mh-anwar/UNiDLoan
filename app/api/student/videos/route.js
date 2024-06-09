@@ -14,7 +14,7 @@ export async function GET(req) {
                 video: student.video,
                 testnetId: student.testnetId,
             }));
-        return NextResponse.json(JSON.stringify(allVideos), {
+        return NextResponse.json(allVideos, {
             status: 200,
         });
     } catch (err) {
