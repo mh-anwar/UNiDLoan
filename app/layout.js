@@ -23,6 +23,8 @@ export default function RootLayout({ children }) {
             value={{
                 displayContract: displayContract,
                 setDisplayContract: setDisplayContract,
+                displayCreateContract: displayCreateContract,
+                setDisplayCreateContract: setDisplayCreateContract,
                 nearID: nearID,
                 setNearID: setNearID,
                 displayLogin: displayLogin,
