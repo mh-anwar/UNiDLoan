@@ -13,7 +13,10 @@ const ContractsSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-
+    message: {
+        type: String,
+        required: true,
+    },
     studentId: {
         type: String,
         required: true,
