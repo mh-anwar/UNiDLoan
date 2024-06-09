@@ -9,7 +9,7 @@ export async function GET(req) {
         await mongoose.connect(process.env.MONGODB);
         const students = await Student.find();
 
-        return NextResponse.json(JSON.stringify(students), { status: 200 });
+        return NextResponse.json(students, { status: 200 });
     } catch (err) {
         return new Response(JSON.stringify(err), { status: 500 });
     }
